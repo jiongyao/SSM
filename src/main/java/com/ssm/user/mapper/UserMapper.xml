@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ssm.user.mapper.UserMapper" >
+  <resultMap id="BaseResultMap" type="com.ssm.user.pojo.User" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="username" property="username" jdbcType="VARCHAR" />
+    <result column="password" property="password" jdbcType="VARCHAR" />
+    <result column="phone" property="phone" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="INTEGER" />
+    <!--<result column="createDate" property="createdate" jdbcType="TIMESTAMP" />
+    <result column="updateDate" property="updatedate" jdbcType="TIMESTAMP" />
+    <result column="lastLoginDate" property="lastlogindate" jdbcType="TIMESTAMP" />-->
+  </resultMap>
+
+  <sql id="Base_Column_List" >
+    id, username, password, phone
+  </sql>
+
+  <select id="getUsers" resultMap="BaseResultMap" parameterType="com.ssm.util.MysqlPageUtils" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_user
+    limit #{limit},#{size}
+  </select>
+  
+  <select id="getCount" resultType="long">
+  	select count(*) from t_user
+  </select>
+
+  <select id="getAllUsers" resultMap="BaseResultMap" parameterType="com.ssm.util.MysqlPageUtils">
+    select * FROM t_user u LEFT JOIN t_type t ON u.type = t.id
+    limit #{limit},#{size}
+  </select>
+
+  <select id="getAllCount" resultMap="long">
+    select count(*) FROM t_user u LEFT JOIN t_type t ON u.type = t.id
+  </select>
+
+  <!-- 
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from t_user
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.ssm.user.pojo.User" >
+    insert into t_user (id, username, password, 
+      phone, type, createDate, 
+      updateDate, lastLoginDate)
+    values (#{id,jdbcType=BIGINT}, #{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
+      #{phone,jdbcType=VARCHAR}, #{type,jdbcType=INTEGER}, #{createdate,jdbcType=TIMESTAMP}, 
+      #{updatedate,jdbcType=TIMESTAMP}, #{lastlogindate,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ssm.user.pojo.User" >
+    insert into t_user
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="username != null" >
+        username,
+      </if>
+      <if test="password != null" >
+        password,
+      </if>
+      <if test="phone != null" >
+        phone,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="createdate != null" >
+        createDate,
+      </if>
+      <if test="updatedate != null" >
+        updateDate,
+      </if>
+      <if test="lastlogindate != null" >
+        lastLoginDate,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="username != null" >
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null" >
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=INTEGER},
+      </if>
+      <if test="createdate != null" >
+        #{createdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedate != null" >
+        #{updatedate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastlogindate != null" >
+        #{lastlogindate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ssm.user.pojo.User" >
+    update t_user
+    <set >
+      <if test="username != null" >
+        username = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        password = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null" >
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=INTEGER},
+      </if>
+      <if test="createdate != null" >
+        createDate = #{createdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedate != null" >
+        updateDate = #{updatedate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastlogindate != null" >
+        lastLoginDate = #{lastlogindate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ssm.user.pojo.User" >
+    update t_user
+    set username = #{username,jdbcType=VARCHAR},
+      password = #{password,jdbcType=VARCHAR},
+      phone = #{phone,jdbcType=VARCHAR},
+      type = #{type,jdbcType=INTEGER},
+      createDate = #{createdate,jdbcType=TIMESTAMP},
+      updateDate = #{updatedate,jdbcType=TIMESTAMP},
+      lastLoginDate = #{lastlogindate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update> -->
+</mapper>
